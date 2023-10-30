@@ -1,4 +1,4 @@
-class SensorGNSS_N
+class SensorGNSS_N /* Northing or Y position */
 
 instance variables
 	port : RealPort;

@@ -22,7 +22,7 @@ class SensorGNSS
 	
 		public Sync: () ==> ()
 			Sync() == cycles(20)(
-				local_val := [i_x.get(), i_y.get(), i_theta.get(), 0.0];
+				local_val := [i_x.get(), i_y.get(), i_theta.get(), 0.0]; /* Note theres no Z as we assume that the robot will always be at ground level */
 			);
 
 end SensorGNSS

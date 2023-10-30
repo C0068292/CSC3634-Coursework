@@ -42,11 +42,11 @@ class Controller
 	
 		public Controller: SensorGNSS * ActuatorSteering * ActuatorSpeed ==> Controller
 		Controller(gnss_pos,aSt,aSp) == (
-			sensorGNSS_Pos := gnss_pos;
+			sensorGNSS_Pos := gnss_pos; /* holds the refrence to the GNSS sensor */
 			actuatorAngle :=  aSt;
 			actuatorSpeed := aSp;
 
-			route_name := "figure_8";
+			route_name := "straight"; /* buch of other stuff to do the driving (apparently) */
 			route := Route`LoadTravlRoute(route_name);
 			waypointControl := new Sequence(route);
 			mode := modeControl.GetMode(route);

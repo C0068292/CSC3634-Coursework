@@ -1,4 +1,4 @@
-class SensorGNSS_E
+class SensorGNSS_E /*Easting basically the X value*/
 
 instance variables
 	port : RealPort;
