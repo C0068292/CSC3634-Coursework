@@ -5,7 +5,6 @@ class Controller
 	instance variables
         -- GPS sensor
 		private sensorGNSS_Pos: SensorGNSS;
-
         -- actuators
 		private actuatorAngle : ActuatorSteering;
 		private actuatorSpeed : ActuatorSpeed;
@@ -83,7 +82,6 @@ class Controller
 				speed := 0.0;
 				return
 			);
-			 
 			IO`printf("Steering angle: %s, speed: %s, current position: [%s,%s], current waypoint: [%s,%s]\n", [steering_angle, speed, PosGNSS(1), PosGNSS(2), wp.PosX(), wp.PosY()]);
 		);
 		
