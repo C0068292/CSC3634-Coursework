@@ -1,13 +1,13 @@
 class SensorGNSS
 
 	instance variables
-		public static i_x : [SensorGNSS_E] := nil;
-		public static i_y : [SensorGNSS_N] := nil;
+		public static i_x : [SensorGNSS_E_Faulty] := nil;
+		public static i_y : [SensorGNSS_N_Faulty] := nil;
 		public static i_theta : [SensorGNSS_H] := nil;
 		protected local_val: seq of real := [0.0, 0.0, 0.0, 0.0];
 	
 	operations
-		public SensorGNSS: SensorGNSS_E * SensorGNSS_N * SensorGNSS_H ==> SensorGNSS
+		public SensorGNSS: SensorGNSS_E_Faulty * SensorGNSS_N_Faulty * SensorGNSS_H ==> SensorGNSS
 			SensorGNSS(x,y,theta) == (
 				i_x := x;
 				i_y := y;

@@ -46,7 +46,7 @@ class Controller
 			actuatorAngle :=  aSt;
 			actuatorSpeed := aSp;
 
-			route_name := "straight"; /* buch of other stuff to do the driving (apparently) */
+			route_name := "figure_8"; /* buch of other stuff to do the driving (apparently) */
 			route := Route`LoadTravlRoute(route_name);
 			waypointControl := new Sequence(route);
 			mode := modeControl.GetMode(route);

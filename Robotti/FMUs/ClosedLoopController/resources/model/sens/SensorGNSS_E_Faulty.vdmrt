@@ -1,0 +1,14 @@
+class SensorGNSS_E_Faulty /*Easting basically the X value*/
+
+instance variables
+	port : RealPort;
+
+	operations
+	public SensorGNSS_E_Faulty : RealPort ==> SensorGNSS_E_Faulty
+	SensorGNSS_E_Faulty(p) ==
+		port := p;
+		
+	public get: () ==> real
+			get() == if MATH`rand(100) < 5 then return -100 else return port.getValue();
+	
+end SensorGNSS_E_Faulty

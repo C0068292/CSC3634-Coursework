@@ -1,0 +1,14 @@
+class SensorGNSS_N_Faulty /* Northing or Y position */
+
+instance variables
+	port : RealPort;
+
+	operations
+	public SensorGNSS_N_Faulty : RealPort ==> SensorGNSS_N_Faulty
+	SensorGNSS_N_Faulty(p) ==
+		port := p;
+		
+	public get: () ==> real
+			get() == if MATH`rand(100) < 5 then return -100 else return port.getValue();
+	
+end SensorGNSS_N_Faulty
