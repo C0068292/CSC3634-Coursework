@@ -3,8 +3,15 @@ class Controller
 	thread periodic(1e8, 0, 0, 0)(Step);
 		
 	instance variables
+		private i: real;  
         -- GPS sensor
-		private sensorGNSS_Pos: SensorGNSS;
+		private sensorGNSS_Pos_1: SensorGNSS;
+		private sensorGNSS_Pos_Bad: SensorGNSS;
+		private sensorGNSS_Pos_2: SensorGNSS;
+
+		-- Voter
+		private voter: Voter;
+
         -- actuators
 		private actuatorAngle : ActuatorSteering;
 		private actuatorSpeed : ActuatorSpeed;
@@ -26,6 +33,9 @@ class Controller
 
 		-- x, y, theta, 0
 		private PosGNSS: seq of real := [0.0, 0.0, 0.0, 0.0];
+		private PosGNSS_1: seq of real := [0.0, 0.0, 0.0, 0.0];
+		private PosGNSS_Bad: seq of real := [0.0, 0.0, 0.0, 0.0];
+		private PosGNSS_2: seq of real := [0.0, 0.0, 0.0, 0.0];
 
         -- waypoints
 		private init: bool := true;
@@ -39,9 +49,15 @@ class Controller
 		
 	operations
 	
-		public Controller: SensorGNSS * ActuatorSteering * ActuatorSpeed ==> Controller
-		Controller(gnss_pos,aSt,aSp) == (
-			sensorGNSS_Pos := gnss_pos; /* holds the refrence to the GNSS sensor */
+		public Controller: seq of SensorGNSS * ActuatorSteering * ActuatorSpeed * Voter ==> Controller
+		Controller(gnss_pos_list,aSt,aSp,vtr) == (
+			i := 0.4;
+			sensorGNSS_Pos_1 := gnss_pos_list(1); /* holds the refrence to the GNSS sensor */
+			sensorGNSS_Pos_Bad := gnss_pos_list(2); /* holds the refrence to the bad GNSS sensor */
+			sensorGNSS_Pos_2 := gnss_pos_list(3); /* holds the refrence to the GNSS sensor */
+			
+			voter := vtr;
+
 			actuatorAngle :=  aSt;
 			actuatorSpeed := aSp;
 
@@ -64,7 +80,17 @@ class Controller
 			actuatorSpeed.setValue(speed);			
 
             -- read GPS: x, y, theta, 0
-			PosGNSS := sensorGNSS_Pos.read(); 
+			-- do TMR on the three outputs
+			PosGNSS_1 := sensorGNSS_Pos_1.read(); 
+			PosGNSS_Bad := sensorGNSS_Pos_Bad.read(); 
+			PosGNSS_2 := sensorGNSS_Pos_2.read(); 
+
+
+			PosGNSS := sensorGNSS_Pos_1.read(); -- temp to make it run bad
+
+			-- do TMR
+			i := voter.choose_value(-100.3, 0.4, -100.3);
+			PosGNSS(1) := i;
 						
             -- get current mode from supervisory controller            
 			mode := modeControl.GetMode(route); 
