@@ -14,19 +14,14 @@ operations
 public System: () ==> System
 System() == (
 
-		let sensorGNSS_e_1 = new SensorGNSS_E(hwi.pos_x),
-			sensorGNSS_e_bad = new SensorGNSS_E_Faulty(hwi.pos_x),
-			sensorGNSS_e_2 = new SensorGNSS_E(hwi.pos_x),
-
-			voter = new Voter(),
-
-			sensorGNSS_n = new SensorGNSS_N_Faulty(hwi.pos_y),
+		let sensorGNSS_e = new SensorGNSS_E(hwi.pos_x),
+			sensorGNSS_n = new SensorGNSS_N(hwi.pos_y),
 			sensorGNSS_h = new SensorGNSS_H(hwi.pos_theta),
-			sensorGNSS_Pos = new SensorGNSS(sensorGNSS_e_1, sensorGNSS_n, sensorGNSS_h),
+			sensorGNSS_Pos = new SensorGNSS(sensorGNSS_e, sensorGNSS_n, sensorGNSS_h),
 			actuatorAngle = new ActuatorSteering(hwi.delta_f),
       		actuatorSpeed = new ActuatorSpeed(hwi.speed)
 	in
-			controller := new Controller([sensorGNSS_Pos, sensorGNSS_e_bad, sensorGNSS_e_2], actuatorAngle, actuatorSpeed, voter);
+			controller := new Controller(sensorGNSS_Pos, actuatorAngle, actuatorSpeed);
 
 	-- deployment of the controller
 	cpu1.deploy(controller,"Controller")
