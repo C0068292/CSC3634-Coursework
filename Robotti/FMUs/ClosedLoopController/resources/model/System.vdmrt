@@ -15,12 +15,17 @@ public System: () ==> System
 System() == (
 
 		let sensorGNSS_e = new SensorGNSS_E(hwi.pos_x),
+		    sensorGNSS_e_faulty1 = new SensorGNSS_E_Faulty(hwi.pos_x),
+		    sensorGNSS_e_faulty2 = new SensorGNSS_E(hwi.pos_x),
 			sensorGNSS_n = new SensorGNSS_N(hwi.pos_y),
 			sensorGNSS_h = new SensorGNSS_H(hwi.pos_theta),
-			sensorGNSS_Pos = new SensorGNSS(sensorGNSS_e, sensorGNSS_n, sensorGNSS_h),
+
+			voter = new Voter(),
+
+			sensorGNSS_Pos = new SensorGNSS([sensorGNSS_e, sensorGNSS_e_faulty1, sensorGNSS_e_faulty2], sensorGNSS_n, sensorGNSS_h, voter),
 			actuatorAngle = new ActuatorSteering(hwi.delta_f),
       		actuatorSpeed = new ActuatorSpeed(hwi.speed)
-	in
+		in
 			controller := new Controller(sensorGNSS_Pos, actuatorAngle, actuatorSpeed);
 
 	-- deployment of the controller

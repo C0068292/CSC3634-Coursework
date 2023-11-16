@@ -1,19 +1,19 @@
 class SensorGNSS
 
 	instance variables
-		public static i_x : [SensorGNSS_E] := nil;
+		public static i_x : seq of SensorGNSS_E := [];
 		public static i_y : [SensorGNSS_N] := nil;
 		public static i_theta : [SensorGNSS_H] := nil;
+		public static voter : [Voter] := nil;
 		protected local_val: seq of real := [0.0, 0.0, 0.0, 0.0];
-		public E_c_state : <Good> | <Error>;
 	
 	operations
-		public SensorGNSS: SensorGNSS_E * SensorGNSS_N * SensorGNSS_H ==> SensorGNSS
-			SensorGNSS(x,y,theta) == (
+		public SensorGNSS: seq of SensorGNSS_E * SensorGNSS_N * SensorGNSS_H * Voter ==> SensorGNSS
+			SensorGNSS(x,y,theta,vtr) == (
 				i_x := x;
 				i_y := y;
 				i_theta := theta;
-				E_c_state := <Good>;
+				voter := vtr;
 			);
 	
 		public read: () ==> seq of real
@@ -24,7 +24,11 @@ class SensorGNSS
 	
 		public Sync: () ==> ()
 			Sync() == cycles(20)(
-				local_val := [i_x.get(), i_y.get(), i_theta.get(), 0.0]; --Note theres no Z as we assume that the robot will always be at ground level
+				local_val := [
+					voter.choose_value(i_x(1).get(), i_x(2).get(), i_x(3).get()),
+					i_y.get(),
+					i_theta.get(), 0.0
+				]; --Note theres no Z as we assume that the robot will always be at ground level
 			);
 
 end SensorGNSS
