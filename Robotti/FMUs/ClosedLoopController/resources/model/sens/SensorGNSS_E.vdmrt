@@ -2,13 +2,26 @@ class SensorGNSS_E /*Easting basically the X value*/
 
 instance variables
 	port : RealPort;
+	public c_state : <Good> | <Error>;
 
 	operations
 	public SensorGNSS_E : RealPort ==> SensorGNSS_E
-	SensorGNSS_E(p) ==
+	SensorGNSS_E(p) == (
 		port := p;
+		c_state := <Good>;
+	);
 		
 	public get: () ==> real
 			get() == return port.getValue();
+
+	public set_c_state: <Good> | <Error> ==> ()
+	set_c_state(value) == (
+		c_state := value;
+	); 
+
+	public get_c_state: () ==> <Good> | <Error>
+	get_c_state() == (
+		return c_state;
+	);
 	
 end SensorGNSS_E

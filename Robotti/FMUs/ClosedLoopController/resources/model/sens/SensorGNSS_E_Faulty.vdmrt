@@ -12,17 +12,26 @@ instance variables
 	);
 
 	public get: () ==> real
-			get() == (
+	get() == (
 
-				if (MATH`rand(100) < 5)
-				then (
-					c_state := <Error>;
-					return -100;
-				)
-				else (
-					c_state := <Good>;
-					return port.getValue()
-				);
-			)
+		if (self.c_state = <Error>)
+		then (
+			return -100;
+		)
+		else (
+			return port.getValue()
+		);
+	);
+
+
+	public set_c_state: <Good> | <Error> ==> ()
+	set_c_state(value) == (
+		c_state := value;
+	);
+
+	public get_c_state: () ==> <Good> | <Error>
+	get_c_state() == (
+		return c_state;
+	);
 
 end SensorGNSS_E_Faulty

@@ -6,6 +6,8 @@ class Controller
         -- GPS sensor
 		private sensorGNSS_Pos: SensorGNSS;
 
+		private faulty_E_Temp: SensorGNSS_E;
+
         -- actuators
 		private actuatorAngle : ActuatorSteering;
 		private actuatorSpeed : ActuatorSpeed;
@@ -84,7 +86,17 @@ class Controller
 				speed := 0.0;
 				return
 			);
-			IO`printf("Steering angle: %s, speed: %s, current position: [%s,%s], current waypoint: [%s,%s]\n", [steering_angle, speed, PosGNSS(1), PosGNSS(2), wp.PosX(), wp.PosY()]);
+			faulty_E_Temp := sensorGNSS_Pos.get_i_x(2);
+			IO`printf("Steering angle: %s, speed: %s, current position: [%s,%s], current waypoint: [%s,%s], time: %s, c_state: %s\n", [steering_angle, speed, PosGNSS(1), PosGNSS(2), wp.PosX(), wp.PosY(), time/1e10, faulty_E_Temp.get_c_state()]);
+
+
+			if (time/1e10 > 5) 
+			then (
+				faulty_E_Temp := sensorGNSS_Pos.get_i_x(2);
+				faulty_E_Temp.set_c_state(<Error>);
+				faulty_E_Temp := sensorGNSS_Pos.get_i_x(3);
+				faulty_E_Temp.set_c_state(<Error>);
+			);
 		);
 		
 end Controller

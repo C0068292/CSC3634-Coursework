@@ -25,10 +25,15 @@ class SensorGNSS
 		public Sync: () ==> ()
 			Sync() == cycles(20)(
 				local_val := [
-					voter.choose_value(i_x(1).get(), i_x(2).get(), i_x(3).get()),
+					-- voter.choose_value(i_x(1).get(), i_x(2).get(), i_x(3).get()),
+					i_x(2).get(),
 					i_y.get(),
 					i_theta.get(), 0.0
 				]; --Note theres no Z as we assume that the robot will always be at ground level
 			);
 
+		public get_i_x: nat ==> SensorGNSS_E
+		get_i_x(value) == (
+			return i_x(value);
+		);
 end SensorGNSS
