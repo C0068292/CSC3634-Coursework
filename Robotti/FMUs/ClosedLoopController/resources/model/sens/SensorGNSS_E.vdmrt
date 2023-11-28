@@ -2,7 +2,7 @@ class SensorGNSS_E /*Easting basically the X value*/
 
 instance variables
 	port : RealPort;
-	public c_state : <Good> | <Error>;
+	public c_state: <Good> | <Error>;
 
 	operations
 	public SensorGNSS_E : RealPort ==> SensorGNSS_E

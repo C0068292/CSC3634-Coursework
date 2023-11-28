@@ -3,10 +3,11 @@ class Controller
 	thread periodic(1e8, 0, 0, 0)(Step);
 		
 	instance variables 
+		-- Time the fault occures at 
+		private time_fault_occurs_at: real := 5.0;
+
         -- GPS sensor
 		private sensorGNSS_Pos: SensorGNSS;
-
-		private faulty_E_Temp: SensorGNSS_E;
 
         -- actuators
 		private actuatorAngle : ActuatorSteering;
@@ -86,16 +87,13 @@ class Controller
 				speed := 0.0;
 				return
 			);
-			faulty_E_Temp := sensorGNSS_Pos.get_i_x(2);
-			IO`printf("Steering angle: %s, speed: %s, current position: [%s,%s], current waypoint: [%s,%s], time: %s, c_state: %s\n", [steering_angle, speed, PosGNSS(1), PosGNSS(2), wp.PosX(), wp.PosY(), time/1e10, faulty_E_Temp.get_c_state()]);
+			IO`printf("Steering angle: %s, speed: %s, current position: [%s,%s], current waypoint: [%s,%s], time: %s\n", [steering_angle, speed, PosGNSS(1), PosGNSS(2), wp.PosX(), wp.PosY(), time/1e10]);
 
 
-			if (time/1e10 > 5) 
+			if (time/1e10 > time_fault_occurs_at) 
 			then (
-				faulty_E_Temp := sensorGNSS_Pos.get_i_x(2);
-				faulty_E_Temp.set_c_state(<Error>);
-				faulty_E_Temp := sensorGNSS_Pos.get_i_x(3);
-				faulty_E_Temp.set_c_state(<Error>);
+				sensorGNSS_Pos.get_i_x(2).set_c_state(<Error>);
+				sensorGNSS_Pos.get_i_y(2).set_c_state(<Error>);
 			);
 		);
 		

@@ -2,13 +2,27 @@ class SensorGNSS_N /* Northing or Y position */
 
 instance variables
 	port : RealPort;
+	public c_state : <Good> | <Error>;
 
 	operations
 	public SensorGNSS_N : RealPort ==> SensorGNSS_N
-	SensorGNSS_N(p) ==
+	SensorGNSS_N(p) == (
 		port := p;
+		c_state := <Good>;
+	);
 		
 	public get: () ==> real
 			get() == return port.getValue();
+
+
+	public set_c_state: <Good> | <Error> ==> ()
+	set_c_state(value) == (
+		c_state := value;
+	);
+
+	public get_c_state: () ==> <Good> | <Error>
+	get_c_state() == (
+		return c_state;
+	);
 	
 end SensorGNSS_N

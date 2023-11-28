@@ -2,13 +2,28 @@ class SensorGNSS_H /* Heading basically the Theta or direction traveling */
 
 instance variables
 	port : RealPort;
+	public c_state: <Good> | <Error>
 
 	operations
 	public SensorGNSS_H : RealPort ==> SensorGNSS_H
-	SensorGNSS_H(p) ==
+	SensorGNSS_H(p) == (
 		port := p;
+		c_state := <Good>;
+	);
 		
 	public get: () ==> real
-			get() == return port.getValue();
+	get() == (
+		return port.getValue();
+	);
+
+	public set_c_state: <Good> | <Error> ==> ()
+	set_c_state(value) == (
+		c_state := value;
+	); 
+
+	public get_c_state: () ==> <Good> | <Error>
+	get_c_state() == (
+		return c_state;
+	);
 
 end SensorGNSS_H

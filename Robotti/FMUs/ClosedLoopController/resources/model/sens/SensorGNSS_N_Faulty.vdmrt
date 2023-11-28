@@ -1,14 +1,37 @@
-class SensorGNSS_N_Faulty is subclass of SensorGNSS_N -- Northing or Y position
+class SensorGNSS_N_Faulty is subclass of SensorGNSS_N -- Easting basically the X value
 
 instance variables
 	port : RealPort;
+	public c_state : <Good> | <Error>;
 
 	operations
 	public SensorGNSS_N_Faulty : RealPort ==> SensorGNSS_N_Faulty
-	SensorGNSS_N_Faulty(p) ==
+	SensorGNSS_N_Faulty(p) == (
 		port := p;
+		c_state := <Good>;
+	);
 
 	public get: () ==> real
-			get() == if MATH`rand(100) < 5 then return -100 else return port.getValue();
+	get() == (
+
+		if (self.c_state = <Error>)
+		then (
+			return -100;
+		)
+		else (
+			return port.getValue()
+		);
+	);
+
+
+	public set_c_state: <Good> | <Error> ==> ()
+	set_c_state(value) == (
+		c_state := value;
+	);
+
+	public get_c_state: () ==> <Good> | <Error>
+	get_c_state() == (
+		return c_state;
+	);
 
 end SensorGNSS_N_Faulty
