@@ -1,18 +1,13 @@
-class Voter -- make this static????
-
-    instance variables
-        output: seq of real := [];
-
-    values
-        
+class Voter
+    
     operations
 
     public Voter: () ==> Voter
     Voter() == (
-        output := [0.0, 0.0, 0.0, 0.0];
+        skip;
     );
 
-
+    -- Do TMR on the three inputs
     public choose_value: real * real * real ==> real
     choose_value(v1,v2,v3) == (
         if (v1 = v2)

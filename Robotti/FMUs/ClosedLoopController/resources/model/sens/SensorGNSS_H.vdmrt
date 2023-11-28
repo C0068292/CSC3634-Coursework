@@ -1,4 +1,4 @@
-class SensorGNSS_H /* Heading basically the Theta or direction traveling */
+class SensorGNSS_H
 
 instance variables
 	port : RealPort;

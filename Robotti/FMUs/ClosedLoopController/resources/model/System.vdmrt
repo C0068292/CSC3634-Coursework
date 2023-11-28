@@ -14,19 +14,21 @@ operations
 public System: () ==> System
 System() == (
 
-		let sensorGNSS_e = new SensorGNSS_E(hwi.pos_x),
-		    sensorGNSS_e_faulty1 = new SensorGNSS_E_Faulty(hwi.pos_x),
-		    sensorGNSS_e_faulty2 = new SensorGNSS_E(hwi.pos_x),
+		let sensorGNSS_e1 = new SensorGNSS_E(hwi.pos_x),
+		    sensorGNSS_e_faulty = new SensorGNSS_E_Faulty(hwi.pos_x),
+		    sensorGNSS_e2 = new SensorGNSS_E(hwi.pos_x),
 
-			sensorGNSS_n = new SensorGNSS_N(hwi.pos_y),
-			sensorGNSS_n_faulty1 = new SensorGNSS_N_Faulty(hwi.pos_y),
-			sensorGNSS_n_faulty2 = new SensorGNSS_N(hwi.pos_y),
+			sensorGNSS_n1 = new SensorGNSS_N(hwi.pos_y),
+			sensorGNSS_n_faulty = new SensorGNSS_N_Faulty(hwi.pos_y),
+			sensorGNSS_n2 = new SensorGNSS_N(hwi.pos_y),
 
-			sensorGNSS_h = new SensorGNSS_H(hwi.pos_theta),
+			sensorGNSS_h1 = new SensorGNSS_H(hwi.pos_theta),
+			sensorGNSS_h_faulty = new SensorGNSS_H_Faulty(hwi.pos_theta),
+			sensorGNSS_h2 = new SensorGNSS_H(hwi.pos_theta),
 
 			voter = new Voter(),
 
-			sensorGNSS_Pos = new SensorGNSS([sensorGNSS_e, sensorGNSS_e_faulty1, sensorGNSS_e_faulty2], [sensorGNSS_n, sensorGNSS_n_faulty1, sensorGNSS_n_faulty2], sensorGNSS_h, voter),
+			sensorGNSS_Pos = new SensorGNSS([sensorGNSS_e1, sensorGNSS_e_faulty, sensorGNSS_e2], [sensorGNSS_n1, sensorGNSS_n_faulty, sensorGNSS_n2], [sensorGNSS_h1, sensorGNSS_h_faulty, sensorGNSS_h2], voter),
 			actuatorAngle = new ActuatorSteering(hwi.delta_f),
       		actuatorSpeed = new ActuatorSpeed(hwi.speed)
 		in

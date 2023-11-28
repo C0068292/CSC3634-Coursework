@@ -3,12 +3,12 @@ class SensorGNSS
 	instance variables
 		public static i_x : seq of SensorGNSS_E := [];
 		public static i_y : seq of SensorGNSS_N := [];
-		public static i_theta : [SensorGNSS_H] := nil;
+		public static i_theta : seq of SensorGNSS_H := [];
 		public static voter : [Voter] := nil;
 		protected local_val: seq of real := [0.0, 0.0, 0.0, 0.0];
 	
 	operations
-		public SensorGNSS: seq of SensorGNSS_E * seq of SensorGNSS_N * SensorGNSS_H * Voter ==> SensorGNSS
+		public SensorGNSS: seq of SensorGNSS_E * seq of SensorGNSS_N * seq of SensorGNSS_H * Voter ==> SensorGNSS
 		SensorGNSS(x,y,theta,vtr) == (
 			i_x := x;
 			i_y := y;
@@ -26,25 +26,40 @@ class SensorGNSS
 		Sync() == cycles(20)(
 			local_val := [
 				-- i_x(1).get(),
+
+				-- Vote on the inputs for the Easting
 				voter.choose_value(i_x(1).get(), i_x(2).get(), i_x(3).get()),
 				
-				--- i_y(2).get(),
+				-- i_y(1).get(),
+
+				-- Vote on the inputs for the Northing
 				voter.choose_value(i_y(1).get(), i_y(2).get(), i_y(3).get()),
 				
-				i_theta.get(),
+				-- i_theta(1).get(),
+
+				-- Vote on the inputs for the Heading
+				voter.choose_value(i_theta(1).get(), i_theta(2).get(), i_theta(3).get()),
 				
 				0.0
-			]; --Note theres no Z as we assume that the robot will always be at ground level
+			];
 		);
 
+		-- Getter for accessing the i_x variable
 		public get_i_x: nat ==> SensorGNSS_E
 		get_i_x(index) == (
 			return i_x(index);
 		);
 
+		-- Getter for accessing the i_y variable
 		public get_i_y: nat ==> SensorGNSS_N
 		get_i_y(index) == (
 			return i_y(index);
+		);
+
+		-- Getter for accessing the i_theta variable
+		public get_i_theta: nat ==> SensorGNSS_H
+		get_i_theta(index) == (
+			return i_theta(index);
 		);
 
 end SensorGNSS

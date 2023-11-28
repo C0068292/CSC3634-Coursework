@@ -1,19 +1,21 @@
-class SensorGNSS_E_Faulty is subclass of SensorGNSS_E -- Easting basically the X value
+class SensorGNSS_E_Faulty is subclass of SensorGNSS_E
 
 instance variables
 	port : RealPort;
-	public c_state : <Good> | <Error>;
+	-- State of the sensor
+	public c_state: <Good> | <Error>;
 
 	operations
+	-- Constructor to bind the port and set the state of the sensor
 	public SensorGNSS_E_Faulty : RealPort ==> SensorGNSS_E_Faulty
 	SensorGNSS_E_Faulty(p) == (
 		port := p;
 		c_state := <Good>;
 	);
 
+	-- function for getting the value from the INTO-CPS model
 	public get: () ==> real
 	get() == (
-
 		if (self.c_state = <Error>)
 		then (
 			return -100;
@@ -24,11 +26,13 @@ instance variables
 	);
 
 
+	-- Setter for setting the state of the sensor
 	public set_c_state: <Good> | <Error> ==> ()
 	set_c_state(value) == (
 		c_state := value;
 	);
 
+	-- Getter for getting the state of the sensor
 	public get_c_state: () ==> <Good> | <Error>
 	get_c_state() == (
 		return c_state;

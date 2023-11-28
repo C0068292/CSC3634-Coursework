@@ -1,26 +1,38 @@
-class SensorGNSS_H_Faulty is subclass of SensorGNSS_H /* Heading basically the Theta or direction traveling */
+class SensorGNSS_H_Faulty is subclass of SensorGNSS_H
 
 instance variables
 	port : RealPort;
+	-- State of the sensor
     public c_state: <Good> | <Error>; 
 
 	operations
+	-- Constructor to bind the port and set the state of the sensor
 	public SensorGNSS_H_Faulty : RealPort ==> SensorGNSS_H_Faulty
 	SensorGNSS_H_Faulty(p) == (
 		port := p;
         c_state := <Good>;
     );
-		
+
+	-- function for getting the value from the INTO-CPS model
 	public get: () ==> real
 	get() == (
-        return port.getValue();
-    );
+		if (self.c_state = <Error>)
+		then (
+			return -100;
+		)
+		else (
+			return port.getValue()
+		);
+	);
 
+
+	-- Setter for setting the state of the sensor
     public set_c_state: <Good> | <Error> ==> ()
 	set_c_state(value) == (
 		c_state := value;
 	); 
 
+	-- Getter for getting the state of the sensor
 	public get_c_state: () ==> <Good> | <Error>
 	get_c_state() == (
 		return c_state;
