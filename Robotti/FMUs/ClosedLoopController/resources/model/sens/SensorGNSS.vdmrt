@@ -25,17 +25,11 @@ class SensorGNSS
 		public Sync: () ==> ()
 		Sync() == cycles(20)(
 			local_val := [
-				-- i_x(1).get(),
-
 				-- Vote on the inputs for the Easting
 				voter.choose_value(i_x(1).get(), i_x(2).get(), i_x(3).get()),
-				
-				-- i_y(1).get(),
 
 				-- Vote on the inputs for the Northing
 				voter.choose_value(i_y(1).get(), i_y(2).get(), i_y(3).get()),
-				
-				-- i_theta(1).get(),
 
 				-- Vote on the inputs for the Heading
 				voter.choose_value(i_theta(1).get(), i_theta(2).get(), i_theta(3).get()),

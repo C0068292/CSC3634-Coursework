@@ -18,7 +18,7 @@ instance variables
 	get() == (
 		if (self.c_state = <Error>)
 		then (
-			return -100;
+			return MATH`rand(100);
 		)
 		else (
 			return port.getValue()

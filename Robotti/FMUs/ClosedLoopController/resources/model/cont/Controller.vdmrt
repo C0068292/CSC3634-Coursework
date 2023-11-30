@@ -87,7 +87,6 @@ class Controller
 				speed := 0.0;
 				return
 			);
-			IO`printf("Steering angle: %s, speed: %s, current position: [%s,%s], current waypoint: [%s,%s]\n", [steering_angle, speed, PosGNSS(1), PosGNSS(2), wp.PosX(), wp.PosY()]);
 
 			-- If the time is after the time set then set the states of the faulty sensors to be <Error> 
 			if (time/1e10 > TIME_FAULT_OCCURS_AT) 
